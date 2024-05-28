@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.91.0",
@@ -17,6 +19,11 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
+    "@ianthomas23/cockle": "^0.0.2",
+    "@jupyterlab/coreutils": "^6.2.1",
+    "@jupyterlab/services": "^7.2.1",
+    "@lumino/coreutils": "^2.1.2",
+    "@lumino/signaling": "^2.1.2",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0"
   }

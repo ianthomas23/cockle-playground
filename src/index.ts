@@ -1,7 +1,8 @@
+import "./style/playground.css"
 import { Playground } from "./playground"
 
-function start() {
-  const p = new Playground()
-  p.run("targetdiv")
-}
-document.addEventListener("DOMContentLoaded", start);
+document.addEventListener("DOMContentLoaded", () => {
+  const div: HTMLElement = document.getElementById("targetdiv")!
+  const playground = new Playground()
+  playground.run(div)
+})

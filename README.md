@@ -5,3 +5,11 @@ npm install
 npx webpack
 npx webpack-dev-server
 ```
+
+To use local `cockle` repo for rapid development:
+```bash
+cd <cockle directory>
+npm link
+cd <cockle-playground directory>
+npm link @ianthomas23/cockle
+```
