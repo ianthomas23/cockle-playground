@@ -1,4 +1,4 @@
-import { JupyterFileSystem, Shell } from "@ianthomas23/cockle"
+import { JupyterFileSystem, Shell } from "@jupyterlite/cockle"
 import { FitAddon } from '@xterm/addon-fit'
 import { Terminal } from '@xterm/xterm'
 import { ContentsManagerMock } from "./contents_manager_mock"
