@@ -1,7 +1,6 @@
-import { JupyterFileSystem, Shell } from "@jupyterlite/cockle"
+import { Shell } from "@jupyterlite/cockle"
 import { FitAddon } from '@xterm/addon-fit'
 import { Terminal } from '@xterm/xterm'
-import { ContentsManagerMock } from "./contents_manager_mock"
 
 export class Playground {
   constructor() {
@@ -19,14 +18,19 @@ export class Playground {
   }
 
   async run(element: HTMLElement): Promise<void> {
-    const fs = await this._createJupyterFileSystem()
 
     const outputCallback = async (output: string) => {
       //console.log("from shell:", output)
       this._term.write(output)
     }
 
-    this._shell = new Shell(fs, outputCallback)
+    this._shell = new Shell(outputCallback)
+    const { FS } = await this._shell.initFilesystem()
+
+    // Add some dummy files.
+    FS.writeFile('file.txt', 'This is the contents of the file');
+    FS.writeFile('other.txt', 'Some other file');
+    FS.mkdir('dir')
 
     this._term.onResize((arg) => this.onResize(arg))
     this._term.onKey((arg) => this.onKey(arg))
@@ -36,7 +40,7 @@ export class Playground {
     })
 
     this._term.open(element)
-    this._shell!.start()
+    this._shell.start()
     resizeObserver.observe(element)
   }
 
@@ -46,14 +50,6 @@ export class Playground {
 
   onResize(arg: any) {
     this._shell!.setSize(arg.rows, arg.cols)
-  }
-
-  async _createJupyterFileSystem(): Promise<JupyterFileSystem> {
-    const cm = new ContentsManagerMock()
-    await cm.save("file1", {content: "Contents of file1"})
-    await cm.save("file2")
-    await cm.save("dirA", { type: "directory" })
-    return new JupyterFileSystem(cm)
   }
 
   private _term: Terminal

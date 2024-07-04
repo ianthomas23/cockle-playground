@@ -19,11 +19,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
-    "@jupyterlab/coreutils": "^6.2.1",
-    "@jupyterlab/services": "^7.2.1",
-    "@jupyterlite/cockle": "^0.0.3",
-    "@lumino/coreutils": "^2.1.2",
-    "@lumino/signaling": "^2.1.2",
+    "@jupyterlite/cockle": "^0.0.4",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0"
   }
