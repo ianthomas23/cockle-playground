@@ -1,6 +1,7 @@
 import { FitAddon } from '@xterm/addon-fit'
 import { Terminal } from '@xterm/xterm'
 import { proxy, wrap } from 'comlink'
+import { MainBufferedStdin } from './buffered_stdin'
 import { IPlayground, IRemoteWorkerPlayground } from './defs'
 
 export class Playground {
@@ -8,6 +9,7 @@ export class Playground {
     this._options = options
 
     const termOptions = {
+      rows: 50,
       theme: {
         foreground: "black",
         background: "ivory",
@@ -19,6 +21,7 @@ export class Playground {
     this._fitAddon = new FitAddon()
     this._term.loadAddon(this._fitAddon)
 
+    this._bufferedStdin = new MainBufferedStdin()
     this._initWorker()
   }
 
@@ -36,7 +39,12 @@ export class Playground {
   }
 
   async onKey(arg: any): Promise<void> {
-    await this._remote!.input(arg.key)
+    const char = arg.key as string
+    if (this._bufferedStdin.enabled) {
+      await this._bufferedStdin.push(char)
+    } else {
+      await this._remote!.input(char)
+    }
   }
 
   async onResize(arg: any): Promise<void> {
@@ -49,8 +57,22 @@ export class Playground {
     })
 
     this._remote = wrap(this._worker)
-    await this._remote.initialize({})
-    this._remote.registerCallback(proxy(this.outputCallback.bind(this)))
+    const { sharedArrayBuffer } = this._bufferedStdin
+    await this._remote.initialize({ sharedArrayBuffer })
+    this._remote.registerCallbacks(
+      proxy(this.outputCallback.bind(this)),
+      proxy(this.enableBufferedStdinCallback.bind(this)),
+    )
+
+    this._bufferedStdin.registerSendStdinNow(this._remote.input)
+  }
+
+  private async enableBufferedStdinCallback(enable: boolean) {
+    if (enable) {
+      await this._bufferedStdin.enable()
+    } else {
+      await this._bufferedStdin.disable()
+    }
   }
 
   private outputCallback(text: string): void {
@@ -62,4 +84,5 @@ export class Playground {
   private _remote?: IRemoteWorkerPlayground
   private _term: Terminal
   private _fitAddon: FitAddon
+  private _bufferedStdin: MainBufferedStdin
 }

@@ -6,6 +6,7 @@ export namespace IPlayground {
   }
 
   export type IOutputCallback = (output: string) => void
+  export type IEnableBufferedStdinCallback = (enable: boolean) => void
 }
 
 export interface IWorkerPlayground {
@@ -16,16 +17,21 @@ export interface IWorkerPlayground {
 
 export namespace IWorkerPlayground {
   export interface IOptions {
+    sharedArrayBuffer: SharedArrayBuffer
   }
 }
 
 export namespace IRemote {
   export type OutputCallback = IPlayground.IOutputCallback & ProxyMarked
+  export type EnableBufferedStdinCallback = IPlayground.IEnableBufferedStdinCallback & ProxyMarked
 }
 
 export interface IRemote extends IWorkerPlayground {
   initialize(options: IWorkerPlayground.IOptions): Promise<void>
-  registerCallback(outputCallback: IRemote.OutputCallback): void
+  registerCallbacks(
+    outputCallback: IRemote.OutputCallback,
+    enableBufferedStdinCallback: IRemote.EnableBufferedStdinCallback,
+  ): void
 }
 
 export type IRemoteWorkerPlayground = Remote<IRemote>
