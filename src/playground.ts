@@ -1,58 +1,65 @@
-import { Shell } from "@jupyterlite/cockle"
 import { FitAddon } from '@xterm/addon-fit'
 import { Terminal } from '@xterm/xterm'
+import { proxy, wrap } from 'comlink'
+import { IPlayground, IRemoteWorkerPlayground } from './defs'
 
 export class Playground {
-  constructor() {
-    const options = {
+  constructor(options: IPlayground.IOptions) {
+    this._options = options
+
+    const termOptions = {
       theme: {
         foreground: "black",
         background: "ivory",
         cursor: "slategray"
       },
     }
-    this._term = new Terminal(options)
+    this._term = new Terminal(termOptions)
 
     this._fitAddon = new FitAddon()
     this._term.loadAddon(this._fitAddon)
+
+    this._initWorker()
   }
 
-  async run(element: HTMLElement): Promise<void> {
-
-    const outputCallback = async (output: string) => {
-      //console.log("from shell:", output)
-      this._term.write(output)
-    }
-
-    this._shell = new Shell(outputCallback)
-    const { FS } = await this._shell.initFilesystem()
-
-    // Add some dummy files.
-    FS.writeFile('file.txt', 'This is the contents of the file');
-    FS.writeFile('other.txt', 'Some other file');
-    FS.mkdir('dir')
-
-    this._term.onResize((arg) => this.onResize(arg))
-    this._term.onKey((arg) => this.onKey(arg))
+  async start(): Promise<void> {
+    this._term!.onResize(async (arg: any) => await this.onResize(arg))
+    this._term!.onKey(async (arg: any) => await this.onKey(arg))
 
     const resizeObserver = new ResizeObserver((entries) => {
-      this._fitAddon.fit()
+      this._fitAddon!.fit()
     })
 
-    this._term.open(element)
-    this._shell.start()
-    resizeObserver.observe(element)
+    this._term!.open(this._options!.targetDiv)
+    await this._remote!.start()
+    resizeObserver.observe(this._options!.targetDiv)
   }
 
-  onKey(arg: any) {
-    this._shell!.input(arg.key)
+  async onKey(arg: any): Promise<void> {
+    await this._remote!.input(arg.key)
   }
 
-  onResize(arg: any) {
-    this._shell!.setSize(arg.rows, arg.cols)
+  async onResize(arg: any): Promise<void> {
+    await this._remote!.setSize(arg.rows, arg.cols)
   }
 
+  private async _initWorker() {
+    this._worker = new Worker(new URL('./worker_playground.ts', import.meta.url), {
+      type: 'module'
+    })
+
+    this._remote = wrap(this._worker)
+    await this._remote.initialize({})
+    this._remote.registerCallback(proxy(this.outputCallback.bind(this)))
+  }
+
+  private outputCallback(text: string): void {
+    this._term!.write(text)
+  }
+
+  private _options: IPlayground.IOptions
+  private _worker?: Worker
+  private _remote?: IRemoteWorkerPlayground
   private _term: Terminal
   private _fitAddon: FitAddon
-  private _shell?: Shell
 }
