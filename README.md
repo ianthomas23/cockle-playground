@@ -2,8 +2,8 @@ Playground for [cockle](https://github.com/jupyterlite/cockle), an in-browser ba
 
 ```bash
 npm install
-npx webpack
-npx webpack-dev-server
+npm run build
+npm run serve
 ```
 
 To use local `cockle` repo for rapid development:

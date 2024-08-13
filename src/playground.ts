@@ -21,6 +21,7 @@ export class Playground {
     this._term.loadAddon(this._fitAddon)
 
     this._shell = new Shell({
+      wasmBaseUrl: window.location.href,
       outputCallback: this.outputCallback.bind(this),
       initialDirectories: ['dir'],
       initialFiles: {
