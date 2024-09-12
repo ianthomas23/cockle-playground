@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build": "npm run build:wasm && webpack build",
+    "build": "npm run build:wasm && rspack build",
     "build:wasm": "cp node_modules/@jupyterlite/cockle/lib/wasm/*.js assets/ && cp node_modules/@jupyterlite/cockle/lib/wasm/*.wasm assets/",
-    "serve": "webpack serve",
+    "serve": "rspack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main": "dist/index.js",
@@ -14,13 +14,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rspack/cli": "^1.0.4",
+    "@rspack/core": "^1.0.4",
     "css-loader": "^7.1.2",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.4.5",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@jupyterlite/cockle": "^0.0.8",
