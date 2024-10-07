@@ -1,4 +1,6 @@
 dist/
 node_modules/
+assets/cockle-config.json
 assets/*.js
 assets/*.wasm
+cockle_wasm_env/

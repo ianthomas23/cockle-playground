@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build": "npm run build:wasm && rspack build",
-    "build:wasm": "cp node_modules/@jupyterlite/cockle/lib/wasm/*.js assets/ && cp node_modules/@jupyterlite/cockle/lib/wasm/*.wasm assets/",
+    "build": "rspack build",
+    "postbuild": "node node_modules/@jupyterlite/cockle/lib/tools/prepare_wasm.js --copy assets",
     "serve": "rspack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,7 +22,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@jupyterlite/cockle": "^0.0.8",
+    "@jupyterlite/cockle": "^0.0.9",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0"
   }
