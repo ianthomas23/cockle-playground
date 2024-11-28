@@ -43,7 +43,7 @@ export class Playground {
 
   async start(): Promise<void> {
     this._term!.onResize(async (arg: any) => await this.onResize(arg))
-    this._term!.onKey(async (arg: any) => await this.onKey(arg))
+    this._term!.onData(async (data: string) => await this.onData(data))
 
     const resizeObserver = new ResizeObserver((entries) => {
       this._fitAddon!.fit()
@@ -54,8 +54,8 @@ export class Playground {
     resizeObserver.observe(this._options!.targetDiv)
   }
 
-  async onKey(arg: any): Promise<void> {
-    await this._shell.input(arg.key)
+  async onData(data: string): Promise<void> {
+    await this._shell.input(data)
   }
 
   async onResize(arg: any): Promise<void> {
