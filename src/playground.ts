@@ -62,7 +62,7 @@ export class Playground {
     await this._shell.setSize(arg.rows, arg.cols)
   }
 
-  private async outputCallback(text: string): Promise<void> {
+  private outputCallback(text: string): void {
     this._term!.write(text)
   }
 
