@@ -22,7 +22,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@jupyterlite/cockle": "^0.0.14",
+    "@jupyterlite/cockle": "^0.0.15",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0",
     "deepmerge-ts": "^7.1.4"
