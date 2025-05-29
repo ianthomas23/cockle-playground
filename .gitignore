@@ -4,5 +4,6 @@ tsconfig.tsbuildinfo
 assets/cockle-config.json
 *.data
 *.js
+*.js.map
 *.wasm
 cockle_wasm_env/
