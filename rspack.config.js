@@ -30,10 +30,6 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'assets'),
     },
-    headers: {
-      "Cross-Origin-Embedder-Policy": "require-corp",
-      "Cross-Origin-Opener-Policy": "same-origin",
-    },
     port: 4500
   },
 };

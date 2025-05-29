@@ -1,5 +1,10 @@
+import { IShellManager } from '@jupyterlite/cockle';
+
 export namespace IPlayground {
   export interface IOptions {
-    targetDiv: HTMLElement
+    baseUrl: string;
+    browsingContextId: string;
+    shellManager: IShellManager;
+    targetDiv: HTMLElement;
   }
 }

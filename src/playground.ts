@@ -5,7 +5,7 @@ import { IPlayground } from './defs'
 
 export class Playground {
   constructor(options: IPlayground.IOptions) {
-    this._options = options
+    this._targetDiv = options.targetDiv;
 
     const termOptions = {
       rows: 50,
@@ -20,8 +20,13 @@ export class Playground {
     this._fitAddon = new FitAddon()
     this._term.loadAddon(this._fitAddon)
 
+    const { baseUrl, browsingContextId, shellManager } = options;
+
     this._shell = new Shell({
-      wasmBaseUrl: window.location.href,
+      browsingContextId,
+      baseUrl,
+      wasmBaseUrl: baseUrl,
+      shellManager,
       outputCallback: this.outputCallback.bind(this),
       initialDirectories: ['dir'],
       initialFiles: {
@@ -49,9 +54,9 @@ export class Playground {
       this._fitAddon!.fit()
     })
 
-    this._term!.open(this._options!.targetDiv)
+    this._term!.open(this._targetDiv)
     await this._shell.start()
-    resizeObserver.observe(this._options!.targetDiv)
+    resizeObserver.observe(this._targetDiv)
   }
 
   async onData(data: string): Promise<void> {
@@ -66,7 +71,7 @@ export class Playground {
     this._term!.write(text)
   }
 
-  private _options: IPlayground.IOptions
+  private _targetDiv: HTMLElement;
   private _term: Terminal
   private _fitAddon: FitAddon
   private _shell: Shell

@@ -1,7 +1,8 @@
 dist/
 node_modules/
+tsconfig.tsbuildinfo
 assets/cockle-config.json
-assets/*.data
-assets/*.js
-assets/*.wasm
+*.data
+*.js
+*.wasm
 cockle_wasm_env/
