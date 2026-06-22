@@ -1,6 +1,6 @@
 import { ShellManager } from '@jupyterlite/cockle';
-import "./style/playground.css"
-import { Playground } from "./playground"
+import "./style/playground.css";
+import { Playground } from "./playground";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const baseUrl = window.location.href;

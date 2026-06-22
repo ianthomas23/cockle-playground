@@ -7,4 +7,4 @@ export namespace IPlayground {
     shellManager: IShellManager;
     targetDiv: HTMLElement;
   }
-}
+};

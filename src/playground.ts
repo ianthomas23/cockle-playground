@@ -1,7 +1,7 @@
-import { Shell } from '@jupyterlite/cockle'
-import { FitAddon } from '@xterm/addon-fit'
-import { Terminal } from '@xterm/xterm'
-import { IPlayground } from './defs'
+import { Shell } from '@jupyterlite/cockle';
+import { FitAddon } from '@xterm/addon-fit';
+import { Terminal } from '@xterm/xterm';
+import { IPlayground } from './defs';
 
 export class Playground {
   constructor(options: IPlayground.IOptions) {
@@ -14,11 +14,11 @@ export class Playground {
         background: "ivory",
         cursor: "slategray"
       },
-    }
-    this._term = new Terminal(termOptions)
+    };
+    this._term = new Terminal(termOptions);
 
-    this._fitAddon = new FitAddon()
-    this._term.loadAddon(this._fitAddon)
+    this._fitAddon = new FitAddon();
+    this._term.loadAddon(this._fitAddon);
 
     const { baseUrl, browsingContextId, shellManager } = options;
 
@@ -43,36 +43,36 @@ export class Playground {
         'end\n' +
         'print(factorial(tonumber(arg[1])))\n'
       }
-    })
+    });
   }
 
   async start(): Promise<void> {
-    this._term!.onResize(async (arg: any) => await this.onResize(arg))
-    this._term!.onData(async (data: string) => await this.onData(data))
+    this._term!.onResize(async (arg: any) => await this.onResize(arg));
+    this._term!.onData(async (data: string) => await this.onData(data));
 
     const resizeObserver = new ResizeObserver((entries) => {
       this._fitAddon!.fit()
     })
 
     this._term!.open(this._targetDiv)
-    await this._shell.start()
-    resizeObserver.observe(this._targetDiv)
+    await this._shell.start();
+    resizeObserver.observe(this._targetDiv);
   }
 
   async onData(data: string): Promise<void> {
-    await this._shell.input(data)
+    await this._shell.input(data);
   }
 
   async onResize(arg: any): Promise<void> {
-    await this._shell.setSize(arg.rows, arg.cols)
+    await this._shell.setSize({ rows: arg.rows, columns: arg.cols });
   }
 
   private outputCallback(text: string): void {
-    this._term!.write(text)
+    this._term!.write(text);
   }
 
   private _targetDiv: HTMLElement;
-  private _term: Terminal
-  private _fitAddon: FitAddon
-  private _shell: Shell
+  private _term: Terminal;
+  private _fitAddon: FitAddon;
+  private _shell: Shell;
 }
