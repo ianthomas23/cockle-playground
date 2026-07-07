@@ -1,6 +1,11 @@
 @import '~@xterm/xterm/css/xterm.css';
 
+body {
+  margin: 0;
+}
+
 #targetdiv {
-  border: 2px solid lightgrey;
-  height: 100%;
+  padding: 0.3em;
+  box-sizing: content-box;
+  background-color: ivory;
 }
