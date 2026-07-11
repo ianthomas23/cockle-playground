@@ -24,12 +24,11 @@ jobs:
         run: |
           npm install
           npm run build
-          cp dist/* assets/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./assets
+          path: ./dist
 
   deploy:
     needs: build
