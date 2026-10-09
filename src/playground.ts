@@ -9,7 +9,6 @@ export class Playground {
 
     const termOptions = {
       fontSize: 14,
-      rows: 50,
       theme: {
         foreground: "black",
         background: "ivory",

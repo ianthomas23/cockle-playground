@@ -5,9 +5,9 @@
     "declaration": true,
     "esModuleInterop": true,
     "incremental": true,
-    "lib": ["es2022", "webworker"],
+    "lib": ["dom", "es2024"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
@@ -17,7 +17,7 @@
     "rootDir": "src",
     "strict": true,
     "strictNullChecks": true,
-    "target": "es2022",
+    "target": "es2024",
     "sourceMap": true
   },
   "include": ["src/**/*"]

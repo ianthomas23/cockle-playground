@@ -1,10 +1,15 @@
 {
   "packages": {
-    "git2cpp": {},
+    "git2cpp": {
+      "version": "0.0.9"
+    },
     "lua": {},
     "nano": {},
     "tree": {},
-    "vim": {}
+    "vim": {},
+    "coreutils": {
+      "version": "<9.10"
+    }
   },
   "aliases": {
     "git": "git2cpp",

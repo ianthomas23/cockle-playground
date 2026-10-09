@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build": "rspack build",
+    "build": "tsc --noEmit && rspack build",
     "postbuild": "npm run postbuild:copy-assets && npm run postbuild:prepare-wasm",
     "postbuild:copy-assets": "copyfiles -u 1 assets/* dist/",
     "postbuild:prepare-wasm": "node node_modules/@jupyterlite/cockle/lib/tools/prepare_wasm.js --copy dist/",
     "serve": "concurrently 'npm run serve:simple' 'npm run serve:cross-origin'",
     "serve:simple": "npx static-handler --port 4500 dist/",
-    "serve:cross-origin": "npx static-handler --cors --coop --coep --corp --port 4501 dist/"
+    "serve:cross-origin": "npx static-handler --coi --port 4501 dist/"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,10 +25,10 @@
     "static-handler": "^0.5.3",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.6.2",
-    "typescript": "^5.4.5"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@jupyterlite/cockle": "^1.6.0",
+    "@jupyterlite/cockle": "^1.8.0",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/xterm": "^6.0.0",
     "deepmerge-ts": "^7.1.5"

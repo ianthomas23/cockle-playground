@@ -2,10 +2,17 @@
 
 body {
   margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 #targetdiv {
   padding: 0.3em;
   box-sizing: content-box;
   background-color: ivory;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
