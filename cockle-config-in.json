@@ -1,15 +1,20 @@
 {
   "packages": {
-    "git2cpp": {
-      "version": "0.0.9"
+    "awk": {},
+    "findutils": {
+      "modules": {
+        "find": {}
+      }
     },
-    "lua": {},
+    "git2cpp": {},
+    "lua-static": {
+      "modules": {
+        "lua": {}
+      }
+    },
     "nano": {},
     "tree": {},
-    "vim": {},
-    "coreutils": {
-      "version": "<9.10"
-    }
+    "vim": {}
   },
   "aliases": {
     "git": "git2cpp",
